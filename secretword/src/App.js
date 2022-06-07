@@ -56,6 +56,11 @@ function App() {
     console.log(word, category);
     console.log(wordLetters);
 
+    // fill states
+    SetPicketWord(word);
+    SetPicketCategory(category);
+    SetLetters(Letters);
+
     SetGameStage(Stages[1].name);
   };
 
