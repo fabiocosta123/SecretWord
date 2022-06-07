@@ -22,8 +22,40 @@ function App() {
   const [GameStage, SetGameStage] = useState(Stages[0].name);
   const [words] = useState(wordsList);
 
+  const [PicketWord, SetPicketWord] = useState("");
+  const [PicketCategory, SetPicketCategory] = useState("");
+  const [Letters, SetLetters] = useState([]);
+
+  const PicketWordAndPicketCategory = () => {
+    // picket a random category
+    const categories = Object.keys(words);
+    const category =
+      categories[Math.floor(Math.random() * Object.keys(categories).length)];
+
+    console.log(category);
+
+    const word =
+      words[category][Math.floor(Math.random() * words[category].length)];
+
+    console.log(word);
+
+    return { word, category };
+  };
+
   // start secret word game
   const StartGame = () => {
+    //Picket word and picket PicketCategory
+    const { word, category } = PicketWordAndPicketCategory();
+
+    // create an array of letter
+
+    let wordLetters = word.split("");
+
+    wordLetters = wordLetters.map((l) => l.toLowerCase());
+
+    console.log(word, category);
+    console.log(wordLetters);
+
     SetGameStage(Stages[1].name);
   };
 
@@ -33,7 +65,7 @@ function App() {
     SetGameStage(Stages[2].name);
   };
 
-  // end the game
+  // restart the game
   const Retry = () => {
     SetGameStage(Stages[0].name);
   };
