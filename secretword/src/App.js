@@ -25,6 +25,10 @@ function App() {
   const [PicketWord, SetPicketWord] = useState("");
   const [PicketCategory, SetPicketCategory] = useState("");
   const [Letters, SetLetters] = useState([]);
+  const [GuessedLetters, SetGuessedLetters] = useState([]);
+  const [WrongLetters, SetWrongLetters] = useState([]);
+  const [Guesses, SetGuesses] = useState(3);
+  const [Score, SetScore] = useState(0);
 
   const PicketWordAndPicketCategory = () => {
     // picket a random category
@@ -59,7 +63,7 @@ function App() {
     // fill states
     SetPicketWord(word);
     SetPicketCategory(category);
-    SetLetters(Letters);
+    SetLetters(wordLetters);
 
     SetGameStage(Stages[1].name);
   };
@@ -78,7 +82,18 @@ function App() {
   return (
     <div className="App">
       {GameStage === "start" && <StartScreen StartGame={StartGame} />}
-      {GameStage === "game" && <Game VerifyLetter={VerifyLetter} />}
+      {GameStage === "game" && (
+        <Game
+          VerifyLetter={VerifyLetter}
+          PicketWord={PicketWord}
+          PicketCategory={PicketCategory}
+          Letters={Letters}
+          GuessedLetters={GuessedLetters}
+          WrongLetters={WrongLetters}
+          Score={Score}
+          Guesses={Guesses}
+        />
+      )}
       {GameStage === "end" && <GameOver Retry={Retry} />}
     </div>
   );
