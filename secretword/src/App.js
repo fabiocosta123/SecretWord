@@ -11,13 +11,15 @@ import GameOver from "./Components/GameOver";
 import { wordsList } from "./Data/word";
 
 // React
-import { useState /*useEffect, useCallback*/ } from "react";
+import { useEffect, useState /*useEffect, useCallback*/ } from "react";
 
 const Stages = [
   { id: 1, name: "start" },
   { id: 2, name: "game" },
   { id: 3, name: "end" },
 ];
+
+const GuessesQtd = 3;
 function App() {
   const [GameStage, SetGameStage] = useState(Stages[0].name);
   const [words] = useState(wordsList);
@@ -27,8 +29,8 @@ function App() {
   const [Letters, SetLetters] = useState([]);
   const [GuessedLetters, SetGuessedLetters] = useState([]);
   const [WrongLetters, SetWrongLetters] = useState([]);
-  const [Guesses /*SetGuesses*/] = useState(3);
-  const [Score /*SetScore*/] = useState(0);
+  const [Guesses, SetGuesses] = useState(GuessesQtd);
+  const [Score, SetScore] = useState(0);
 
   const PicketWordAndPicketCategory = () => {
     // picket a random category
@@ -92,11 +94,29 @@ function App() {
         ...actualWrongLetters,
         NormalizedLetter,
       ]);
+      SetGuesses((actualGuessedLetters) => actualGuessedLetters - 1);
     }
   };
 
+  const ClearLetterStates = () => {
+    SetGuessedLetters([]);
+    SetWrongLetters([]);
+  };
+
+  useEffect(() => {
+    if (Guesses <= 0) {
+      // reset all States
+
+      ClearLetterStates();
+
+      SetGameStage(Stages[2].name);
+    }
+  }, [Guesses]);
+
   // restart the game
   const Retry = () => {
+    SetScore(0);
+    SetGuesses(GuessesQtd);
     SetGameStage(Stages[0].name);
   };
 
