@@ -135,7 +135,7 @@ function App() {
           Guesses={Guesses}
         />
       )}
-      {GameStage === "end" && <GameOver Retry={Retry} />}
+      {GameStage === "end" && <GameOver Retry={Retry} Score={Score} />}
     </div>
   );
 }
