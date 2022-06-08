@@ -11,7 +11,7 @@ import GameOver from "./Components/GameOver";
 import { wordsList } from "./Data/word";
 
 // React
-import { useEffect, useState /*useEffect, useCallback*/ } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const Stages = [
   { id: 1, name: "start" },
@@ -32,7 +32,7 @@ function App() {
   const [Guesses, SetGuesses] = useState(GuessesQtd);
   const [Score, SetScore] = useState(0);
 
-  const PicketWordAndPicketCategory = () => {
+  const PicketWordAndPicketCategory = useCallback(() => {
     // picket a random category
     const categories = Object.keys(words);
     const category =
@@ -46,10 +46,12 @@ function App() {
     console.log(word);
 
     return { word, category };
-  };
+  }, [words]);
 
   // start secret word game
-  const StartGame = () => {
+  const StartGame = useCallback(() => {
+    // clear all letter
+    ClearLetterStates();
     //Picket word and picket PicketCategory
     const { word, category } = PicketWordAndPicketCategory();
 
@@ -68,7 +70,7 @@ function App() {
     SetLetters(wordLetters);
 
     SetGameStage(Stages[1].name);
-  };
+  }, [PicketWordAndPicketCategory]);
 
   // process the letter input
 
@@ -102,7 +104,7 @@ function App() {
     SetGuessedLetters([]);
     SetWrongLetters([]);
   };
-
+  // check if guesses ended
   useEffect(() => {
     if (Guesses <= 0) {
       // reset all States
@@ -112,6 +114,22 @@ function App() {
       SetGameStage(Stages[2].name);
     }
   }, [Guesses]);
+
+  // check win conditions
+  useEffect(() => {
+    const UniqueLetter = [...new Set(Letters)];
+
+    // win conditions
+    if (GuessedLetters.length === UniqueLetter.length) {
+      // add Score
+      SetScore((actualScore) => {
+        actualScore += 100;
+      });
+
+      // restart game witch new word
+      StartGame();
+    }
+  }, [GuessedLetters, Letters, StartGame]);
 
   // restart the game
   const Retry = () => {
