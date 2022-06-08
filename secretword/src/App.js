@@ -11,7 +11,7 @@ import GameOver from "./Components/GameOver";
 import { wordsList } from "./Data/word";
 
 // React
-import { useState, useEffect, useCallback } from "react";
+import { useState /*useEffect, useCallback*/ } from "react";
 
 const Stages = [
   { id: 1, name: "start" },
@@ -25,10 +25,10 @@ function App() {
   const [PicketWord, SetPicketWord] = useState("");
   const [PicketCategory, SetPicketCategory] = useState("");
   const [Letters, SetLetters] = useState([]);
-  const [GuessedLetters, SetGuessedLetters] = useState([]);
-  const [WrongLetters, SetWrongLetters] = useState([]);
-  const [Guesses, SetGuesses] = useState(3);
-  const [Score, SetScore] = useState(0);
+  const [GuessedLetters /*SetGuessedLetters*/] = useState([]);
+  const [WrongLetters /*SetWrongLetters*/] = useState([]);
+  const [Guesses /*SetGuesses*/] = useState(3);
+  const [Score /*SetScore*/] = useState(0);
 
   const PicketWordAndPicketCategory = () => {
     // picket a random category
@@ -70,8 +70,8 @@ function App() {
 
   // process the letter input
 
-  const VerifyLetter = () => {
-    SetGameStage(Stages[2].name);
+  const VerifyLetter = (Letter) => {
+    console.log(Letter);
   };
 
   // restart the game
