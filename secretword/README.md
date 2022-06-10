@@ -1,3 +1,5 @@
+# SecretWord
+
 ## Adivinhar a palavra, é o que consiste esse jogo.
 
 # São 3 tentativas, ao acertar a palavra, é carregado uma nova palavra de uma
