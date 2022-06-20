@@ -113,7 +113,10 @@ function App() {
     const uniqueLetter = [...new Set(letters)];
 
     // win conditions
-    if (guessedLetters.length === uniqueLetter.length) {
+    if (
+      guessedLetters.length === uniqueLetter.length &&
+      gameStage === Stages[1].name
+    ) {
       // add Score
 
       setScore((actualScore) => (actualScore += 100));
@@ -121,7 +124,7 @@ function App() {
       // restart game witch new word
       startGame();
     }
-  }, [guessedLetters, letters, startGame]);
+  }, [guessedLetters, letters, startGame, gameStage]);
 
   // restart the game
   const retry = () => {
